@@ -25,7 +25,7 @@ fun CurrentScreen(){
         windDirection = "SW",
         day = "October 9",
         description = "",
-        resourceId = R.drawable
+        resourceId = 1 //R.drawable
     )
 
     Column(
