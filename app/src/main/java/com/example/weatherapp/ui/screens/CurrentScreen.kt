@@ -25,7 +25,7 @@ fun CurrentScreen(){
         windDirection = "SW",
         day = "October 9",
         description = "",
-        resourceId = 1 //R.drawable
+        resourceId = R.drawable.cloudy
     )
 
     Column(
@@ -34,13 +34,20 @@ fun CurrentScreen(){
         modifier = Modifier
             .fillMaxSize()
     ) {
+        Text(text = weather.day,
+            style = MaterialTheme.typography.headlineSmall)
+
+        Image(painter = painterResource(id = R.drawable.cloudy),
+            contentDescription = "Weather Picture",
+        )
+
         Text(text = weather.weather,
-            style = MaterialTheme.typography.headlineMedium)
+            style = MaterialTheme.typography.headlineLarge)
 
-        Text("Temperature: " + weather.temp)
+        Text("Temperature: " + weather.temp + "°C, Feels like: " + weather.feelsLike + "°C")
 
-//        Image(painter = painterResource(id = R.drawable.ditto),
-//            contentDescription = "Profile Picture",
-//        )
+        Text("Wind: " + weather.windSpeed + "kmp/h " + weather.windDirection)
+
+        Text(weather.description)
     }
 }
