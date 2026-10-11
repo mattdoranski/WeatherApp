@@ -23,9 +23,9 @@ fun CurrentScreen(){
         feelsLike = 9,
         windSpeed = 20,
         windDirection = "SW",
-        day = "October 9",
+        day = "Fri, October 9",
         description = "",
-        resourceId = R.drawable.cloudy
+        resourceId = R.drawable.overcast
     )
 
     Column(
@@ -37,7 +37,7 @@ fun CurrentScreen(){
         Text(text = weather.day,
             style = MaterialTheme.typography.headlineSmall)
 
-        Image(painter = painterResource(id = R.drawable.cloudy),
+        Image(painter = painterResource(id = R.drawable.overcast),
             contentDescription = "Weather Picture",
         )
 
@@ -46,7 +46,7 @@ fun CurrentScreen(){
 
         Text("Temperature: " + weather.temp + "°C, Feels like: " + weather.feelsLike + "°C")
 
-        Text("Wind: " + weather.windSpeed + "kmp/h " + weather.windDirection)
+        Text("Wind: " + weather.windSpeed + "km/h " + weather.windDirection)
 
         Text(weather.description)
     }
