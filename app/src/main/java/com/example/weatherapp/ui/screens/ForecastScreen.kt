@@ -58,139 +58,58 @@ fun ForecastScreen(){
         resourceId = R.drawable.partlycloudy
     )
 
+    val day4 = Weather(
+        weather = "Storm",
+        temp = 8,
+        feelsLike = 5,
+        windSpeed = 43,
+        windDirection = "SW",
+        day = "Tue, October 13",
+        description = "",
+        resourceId = R.drawable.storm
+    )
+
+    val days = listOf(day1, day2, day3, day4)
+
     Column(
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(5.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
+        days.forEach { day ->
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp)
             ) {
-                Text(
-                    text = day1.day,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                ) {
+                    Text(
+                        text = day.day,
+                        style = MaterialTheme.typography.titleMedium
+                    )
 
-                Image(
-                    painter = painterResource(id = R.drawable.sun),
-                    contentDescription = "Weather Picture",
-                    modifier = Modifier.size(60.dp)
-                )
+                    Image(
+                        painter = painterResource(id = day.resourceId),
+                        contentDescription = "Weather Picture",
+                        modifier = Modifier.size(60.dp)
+                    )
 
-                Text(
-                    text = day1.weather,
-                    style = MaterialTheme.typography.headlineMedium
-                )
+                    Text(
+                        text = day.weather,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
 
-                Text("Temperature: " + day1.temp + "°C, Feels like: " + day1.feelsLike + "°C")
+                    Text("Temperature: " + day.temp + "°C, Feels like: " + day.feelsLike + "°C")
 
-                Text("Wind: " + day1.windSpeed + "km/h " + day1.windDirection)
-            }
-        }
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
-            ) {
-                Text(
-                    text = day2.day,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.rainy),
-                    contentDescription = "Weather Picture",
-                    modifier = Modifier.size(60.dp)
-                )
-
-                Text(
-                    text = day2.weather,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-
-                Text("Temperature: " + day2.temp + "°C, Feels like: " + day2.feelsLike + "°C")
-
-                Text("Wind: " + day2.windSpeed + "km/h " + day2.windDirection)
-            }
-        }
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
-            ) {
-                Text(
-                    text = day3.day,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.partlycloudy),
-                    contentDescription = "Weather Picture",
-                    modifier = Modifier.size(60.dp)
-                )
-
-                Text(
-                    text = day3.weather,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-
-                Text("Temperature: " + day3.temp + "°C, Feels like: " + day3.feelsLike + "°C")
-
-                Text("Wind: " + day3.windSpeed + "km/h " + day3.windDirection)
-            }
-        }
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
-            ) {
-                Text(
-                    text = day1.day,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.sun),
-                    contentDescription = "Weather Picture",
-                    modifier = Modifier.size(60.dp)
-                )
-
-                Text(
-                    text = day1.weather,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-
-                Text("Temperature: " + day1.temp + "°C, Feels like: " + day1.feelsLike + "°C")
-
-                Text("Wind: " + day1.windSpeed + "km/h " + day1.windDirection)
+                    Text("Wind: " + day.windSpeed + "km/h " + day.windDirection)
+                }
             }
         }
     }

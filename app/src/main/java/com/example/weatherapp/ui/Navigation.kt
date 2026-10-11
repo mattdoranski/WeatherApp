@@ -27,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material3.CenterAlignedTopAppBar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,17 +35,16 @@ import androidx.compose.material.icons.filled.WbSunny
 fun Navigation() {
 
     val navController = rememberNavController()
-    var selectedIndex by remember { mutableIntStateOf(0) } // default set to 0
+    var selectedIndex by remember { mutableIntStateOf(0) }
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 colors = topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    //Text("Weather app")
                     if(selectedIndex == 0){
                         Text("Current Weather")
                     }
