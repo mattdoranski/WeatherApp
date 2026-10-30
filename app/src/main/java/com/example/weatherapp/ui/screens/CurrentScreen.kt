@@ -5,69 +5,90 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.input.clearText
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import com.example.weatherapp.R
-import com.example.weatherapp.models.Weather
+import com.example.weatherapp.MainViewModel
+import kotlin.math.roundToInt
 
 @Composable
-fun CurrentScreen(){
+fun CurrentScreen(viewModel: MainViewModel) {
 
-    //Load Weather
-    val weather = Weather(
-        weather = "Overcast",
-        temp = 16,
-        feelsLike = 9,
-        windSpeed = 20,
-        windDirection = "SW",
-        day = "Fri, October 9",
-        description = "Cloudy for the next 6 hours becoming cloudier overnight.",
-        resourceId = R.drawable.overcast
-    )
+    val weather = viewModel.weather
+    val searchTextFieldState = rememberTextFieldState(initialText = "")
 
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        Text(
-            text = weather.day,
-            style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Center
+    Column() {
+        TextField(
+            state = searchTextFieldState,
+            label = { Text("Weather location?") }
         )
 
-        Image(
-            painter = painterResource(id = weather.resourceId),
-            contentDescription = "Weather Picture",
-        )
+        Button(
+            onClick = {
+                // TO-DO: validate name first before calling function
+                viewModel.searchWeather(searchTextFieldState.text.toString().trim())
+                searchTextFieldState.clearText()
+            }
+        ) {
+            Text("Go")
+        }
 
-        Text(
-            text = weather.weather,
-            style = MaterialTheme.typography.headlineLarge,
-            textAlign = TextAlign.Center
-        )
+        // Error message
+        val errorMessage = viewModel.error
+        errorMessage?.let {
+            Text(
+                errorMessage,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
 
-        Text(
-            "Temperature: " + weather.temp + "°C, Feels like: " + weather.feelsLike + "°C",
-            textAlign = TextAlign.Center
-        )
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            weather?.let {
+//            Text(
+//                text = weather.day,
+//                style = MaterialTheme.typography.headlineSmall,
+//                textAlign = TextAlign.Center
+//            )
 
-        Text(
-            "Wind: " + weather.windSpeed + "km/h " + weather.windDirection,
-            textAlign = TextAlign.Center
-        )
+//            Image(
+//                painter = painterResource(id = weather.resourceId),
+//                contentDescription = "Weather Picture",
+//            )
 
-        Text(
-            weather.description,
-            textAlign = TextAlign.Center
-        )
+                Text(
+                    text = it.current.condition.text,
+                    style = MaterialTheme.typography.headlineLarge,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    "Temp: " + it.current.tempC.roundToInt().toString() + "°C, Feels like: " +
+                            it.current.feelsLikeC.roundToInt().toString() + "°C",
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    "Wind: " + it.current.wind.roundToInt().toString() + "km/h " + it.current.windDir,
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
     }
 }

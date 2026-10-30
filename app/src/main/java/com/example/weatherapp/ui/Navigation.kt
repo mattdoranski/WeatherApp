@@ -26,6 +26,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weatherapp.MainViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +36,8 @@ fun Navigation() {
 
     val navController = rememberNavController()
     var selectedIndex by remember { mutableIntStateOf(0) }
+
+    val viewModel: MainViewModel = viewModel()
 
     Scaffold(
         topBar = {
@@ -44,10 +48,10 @@ fun Navigation() {
                 ),
                 title = {
                     if(selectedIndex == 0){
-                        Text("Current Weather")
+                        Text("Current Weather, Halifax NS")
                     }
                     else if(selectedIndex == 1){
-                        Text("Forecast")
+                        Text("Forecast, Halifax NS")
                     }
                 }
             )
@@ -100,10 +104,10 @@ fun Navigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(route = "current") {
-                CurrentScreen()
+                CurrentScreen(viewModel)
             }
             composable(route = "forecast") {
-                ForecastScreen()
+                ForecastScreen(viewModel)
             }
         }
     }
